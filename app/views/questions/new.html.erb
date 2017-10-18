@@ -1,0 +1,9 @@
+<h1>New Question</h1>
+<%# 'form_for' helper method expects you to give it an ActiveRecord object (instance method) as its first argument. If the object is not persisted (Question.new), then the form will use the default URL to create the action assuming that your application has a route for it.
+
+We must implement that url in our routes file as:
+    'post('questions/', to: 'question#create', as: :questions)'
+
+%>
+
+<%= render 'form' %>

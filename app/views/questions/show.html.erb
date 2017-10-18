@@ -1,0 +1,60 @@
+<h1><%= @question.title %></h1>
+
+<p><%= @question.body %></p>
+
+<%# '&.' is the safe navigation operator. It can be used to avoid "undefined method '...' for nil:NilClass" errors. When used instead of '.', it will check the object before it tries to execute the method after it. If the object is 'nil', then it will immediately return 'nil'.  
+<p><strong>By:</strong> <%= @question.user&.full_name %></p>
+<p><strong>View Count:</strong> <%= @question.view_count %></p>
+<p><strong>Created: </strong> <%= time_ago_in_words(@question.created_at) + " ago" %></p>
+<p><strong>Updated: </strong> <%= time_ago_in_words(@question.updated_at) + " ago" %></p>
+
+
+<% if user_signed_in? && can?(:manage, @question) %>
+  <%= link_to 'Edit', edit_question_path(@question) %>
+
+<%# When you use `method: :delete` in a `link_to`, Rails will use
+    javascript to mimick a delete request to the server. %>
+<%= link_to(
+  'Delete',
+  question_path(@question),
+  data: {confirm: 'Are you sure?'},
+  method: :delete
+) %>
+<% end %>
+<h2>Answers</h2>
+
+<%# If we want to create a form for a resource that is nested inside another,
+    we must give `form_for` the resources in an array in the order of ancestor to
+    descendant like below. This will create a form that uses `question_answers_path`
+    to generate the value for its `action` attribute.
+%>
+
+<%= form_for [@question, @answer] do |f| %>
+  <% if @answer.errors.present? %>
+    <p>
+      <%= @answer.errors.full_messages.join(', ') %>
+    </p>
+  <% end %>
+  <div>
+    <%= f.text_area :body %>
+  </div>
+  <%= f.submit %>
+<% end %>
+
+<div class="answer-list">
+  <% @answers.each do |answer| %>
+    <div class="answer-list-item">
+      <p>By: <%= answer.user&.full_name %></p>
+      <p><%= answer.body %></p>
+      <p><strong>Created: </strong> <%= time_ago_in_words(answer.created_at) %> ago</p>
+      <% if can?(:destroy, answer) %>
+      <%= link_to(
+        'Delete',
+        answer_path(answer),
+        data: {confirm: 'Are you sure?'},
+        method: :delete
+      ) %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
