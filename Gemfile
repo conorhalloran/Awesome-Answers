@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby "2.4.1"
+ruby "2.4.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
@@ -33,6 +33,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'cowsay', '~> 0.3.0'
 gem 'faker', github: 'stympy/faker'
 gem 'bootstrap', '~> 4.0.0.beta'
+gem 'rails_12factor', group: :production
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
