@@ -5,12 +5,18 @@ class Question < ApplicationRecord
   # The first argument is the associated model in lower and pluralized. It
   # is by convention the model that holds the foreign_key (i.e. `question_id`).
   has_many :answers, dependent: :nullify
-  # `dependent: :destroy` will cause all associated answers to be destroyed
-  # before a question is destroyed.
+  has_many :likes, dependent: :destroy
+  # has_many :users, through: :likes
 
-  # `dependent: :nullify` will cause all associated answers to no longer be
-  # associated. In other words, their `question_id` field will be updated
-  # with a `NULL` value.
+  # we prefer using the line 👇 instead of the one 👆 because it's more readable and less
+  # confusing especially that we have `belongs_to :user` association at the top
+  has_many :likers, through: :likes, source: :user
+
+  # to establish a many-to-many association we decompose the assocition into two one-to-many associtions and then establish the many-to-many links using Rails `through` feature.
+  
+  # Note that when you use has_many..through make sure that the model that you're using with the `through` option must have an assocition `belongs_to` that matches what you provided with your `has_many`. 
+  
+  # For instance, if you put `has_many :users` then your `like` model must have `belongs_to :user`
 
   # `has_many` adds many convenience instance methods:
   # answers

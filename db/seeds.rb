@@ -9,7 +9,7 @@ Answer.destroy_all
 Question.destroy_all
 User.destroy_all
 
-PASSWORD = 'password'
+PASSWORD = 'vladsucks'
 
 super_user = User.create(
     first_name: 'Jon',

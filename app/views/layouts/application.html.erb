@@ -19,7 +19,7 @@
     <%= link_to "About", hello_path %> |
     <%= link_to "Subscribe", subscribe_path %> |
     <% if user_signed_in? %>
-      <span>Hello, <%= current_user.first_name %> <%= current_user.first_name %></span>
+      <span>Hello, <%= current_user.first_name %> <%= current_user.last_name %></span>
       <% if current_user.is_admin? %>
         <%= link_to  "Dashboard", admin_dashboard_index_path %> |
         <% end %>

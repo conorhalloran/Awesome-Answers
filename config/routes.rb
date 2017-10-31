@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     # require information from the parent resource (e.g. show, edit, destroy, update.)
     # DELETE /questions/:question_id/answers/:id becomes
     # DELETE /answers/:id
+    resources :likes, shallow: true, only: [:create, :destroy]
   end
 
   # this defines a route as follows:

@@ -43,6 +43,8 @@ class QuestionsController < ApplicationController
     # @answers = Answer.where(question_id: @question.id)
     @answers = @question.answers.order(created_at: :desc)
     @answer = Answer.new
+    @like = @question.likes.find_by_user_id current_user
+
   end
 
   def edit
@@ -89,7 +91,7 @@ class QuestionsController < ApplicationController
   # Remember that if a 'before_action' callback does a 'render', 'redirect_to' pr 'head' (methods that terminate the response), it will stop the request from getting to the action.
   def authorize_user!
     # binding.pry
-    unless can?(:manage, @question)
+    unless can?(:crud, @question)
       flash[:alert] = "Access Denied!"
       redirect_to root_path
 

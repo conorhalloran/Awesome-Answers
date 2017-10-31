@@ -38,12 +38,20 @@ class Ability
 
     # In this rule, we're saying that the user can 'manage' = they can perform any CRUD operation on the resource Question. The user that is allowed to do this is the owner of the question, as shown by 'question.user == user'.
         #ability  #class #block  #instance
-    can :manage, Question do |question|
+    can :crud, Question do |question|
       question.user == user 
     end
 
     can :manage, Answer do |answer|
       answer.user == user 
+    end
+
+    can :like, Question do |question|
+      question.user != user
+    end
+
+    can :destroy, Like do |like|
+      like.user == user
     end
 
     #enables cannot action
