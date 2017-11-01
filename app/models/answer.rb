@@ -4,6 +4,9 @@ class Answer < ApplicationRecord
   # added the following line:
   belongs_to :user
   belongs_to :question
+
+  has_many :votes, dependent: :destroy
+  has_many :voters, through: :votes, source: :user
   
   #, optional: true
   # It tells Rails that in the association between Answer-Question, the answer
@@ -19,5 +22,10 @@ class Answer < ApplicationRecord
   # create_question(attributes = {})
   # create_question!(attributes = {})
   # reload_question
+  
   validates :body, presence: :true
+
+  def vote_result
+    votes.up.count - votes.down.count
+  end
 end

@@ -54,6 +54,10 @@ class Ability
       like.user == user
     end
 
+    can :crud, Vote do |vote|
+      vote.user == user
+    end
+
     #enables cannot action
     # cannot :manage, Answer do |answer|
     #   answer.user != user

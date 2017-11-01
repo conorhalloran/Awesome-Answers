@@ -23,7 +23,9 @@ Rails.application.routes.draw do
   # at once. `resources :questions` will generate exactly the same routes
   # we wrote manually above ð.
   resources :questions do
-    resources :answers, shallow: true, only: [:create, :destroy]
+    resources :answers, shallow: true, only: [:create, :destroy] do
+          resources :votes, only: [:create, :destroy, :update]
+      end
     # ð post('/questions/:question_id/answers', to: 'answers#create', as: question_answers_path)
 
     # Use `shallow: true` option to remove nesting for actions do not normally

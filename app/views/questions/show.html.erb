@@ -66,6 +66,22 @@
         method: :delete
       ) %>
       <% end %>
+      <% if user_signed_in? %>
+        <% vote = answer.votes.find_by_user_id(current_user) %>
+        <% if vote.nil? %>
+          <div><%= answer.vote_result %></div>
+          <%= link_to fa_icon('thumbs-o-up'), answer_votes_path(answer, { is_up: true }), method: :post %>
+          <%= link_to fa_icon('thumbs-o-down'), answer_votes_path(answer, { is_up: false }), method: :post %>
+        <% elsif vote.is_up? %>
+          <div><%= answer.vote_result %></div>
+          <%= link_to fa_icon('thumbs-up'), vote_path(vote), method: :delete %>
+          <%= link_to fa_icon('thumbs-o-down'), vote_path(vote, { is_up: false }), method: :patch %>
+        <% else %>
+          <div><%= answer.vote_result %></div>
+          <%= link_to fa_icon('thumbs-o-up'), vote_path(vote, { is_up: true }), method: :patch %>
+          <%= link_to fa_icon('thumbs-down'), vote_path(vote), method: :delete %>
+        <% end %>
+      <% end %>
     </div>
   <% end %>
 </div>
