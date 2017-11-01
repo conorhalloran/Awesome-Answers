@@ -13,6 +13,8 @@ class Ability
       can :read, :all
     end
 
+    alias_action :create, :read, :update, :destroy, :to => :crud
+
       # cannot :manage, :all do |user|
       #   !user.is_admin?
       # end

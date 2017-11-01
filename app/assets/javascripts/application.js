@@ -14,4 +14,5 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require rails-ujs
+//= require chosen-jquery
 //= require_tree .

@@ -70,13 +70,16 @@ class QuestionsController < ApplicationController
     redirect_to questions_path
   end
 
+  
+
   private
+
   def question_params
     # With this method, we will extract the parameters related to
     # question from the `params` object. And, we'll only permit
     # fields of our choice. In this case, we specifically permit
     # the fields we allow the user to edit in the new_question form.
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, {tag_ids: []})
 
     # The `params` object is available inside all controllers. It's
     # a "hash" that holds all URL params, all fields from the form and

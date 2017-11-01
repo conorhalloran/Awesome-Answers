@@ -8,6 +8,7 @@
 Answer.destroy_all
 Question.destroy_all
 User.destroy_all
+Tag.destroy_all
 
 PASSWORD = 'vladsucks'
 
@@ -20,8 +21,8 @@ super_user = User.create(
   )
 
 10.times.each do
-first_name = Faker::Name.first_name
-last_name = Faker::Name.last_name
+    first_name = Faker::Name.first_name
+    last_name = Faker::Name.last_name
 User.create(
     first_name: first_name,
     last_name: last_name,
@@ -41,22 +42,34 @@ users = User.all
     )
 end
 
+30.times do 
+    Tag.create(name: Faker::Space.galaxy)
+end
+
+tags = Tag.all
+
 questions = Question.all
     
 questions.each do |question|
-    rand(0..5).times.each do
-        Answer.create(
-            body: Faker::TheFreshPrinceOfBelAir.quote,
-            question: question,
-            user: users.sample
-        )
+  rand(0..5).times.each do
+    answer = Answer.create(
+      body: Faker::TheFreshPrinceOfBelAir.quote,
+      question: question,
+      user: users.sample
+    )
+    users.shuffle.slice(0..rand(10)).each do |user|
+      Vote.create(user: user, answer: answer, is_up: [true, false].sample)
     end
-
+  end
+  question.likers = users.shuffle.slice(0..rand(10))
+  question.tags = tags.shuffle.slice(0..rand(5))
 end
+
 
 answers = Answer.all
 
 puts Cowsay.say("Created #{users.count} questions", :tux)
 puts Cowsay.say("Created #{questions.count} questions", :ghostbusters)
 puts Cowsay.say("Created #{answers.count} answers", :moose)
+puts Cowsay.say("Created #{tags.count} tags", :tux)
 puts "Login with #{super_user.email} and password of '#{PASSWORD}'"

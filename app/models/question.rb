@@ -12,6 +12,9 @@ class Question < ApplicationRecord
   # confusing especially that we have `belongs_to :user` association at the top
   has_many :likers, through: :likes, source: :user
 
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
+
   # to establish a many-to-many association we decompose the assocition into two one-to-many associtions and then establish the many-to-many links using Rails `through` feature.
   
   # Note that when you use has_many..through make sure that the model that you're using with the `through` option must have an assocition `belongs_to` that matches what you provided with your `has_many`. 
@@ -68,6 +71,10 @@ class Question < ApplicationRecord
   # def self.recent(count)
   #   order(created_at: :desc).limit(count)
   # end
+
+  def tag_list
+    tags.map(&:name).join(', ')
+  end
 
   private
   def set_defaults

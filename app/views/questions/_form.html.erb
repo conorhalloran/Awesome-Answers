@@ -13,6 +13,12 @@
         <%= form.label :body %>
         <%= form.text_area :body %>
     </div>
+    <div>
+        <%= form.label :tag_ids %>
+        <%= form.collection_select :tag_ids, Tag.order(:name), :id, :name,
+                                        {},
+                                        { multiple: true, class: 'chosen-select' } %>
+    </div>
 
         <%= form.submit %>
 <% end %>

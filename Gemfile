@@ -33,6 +33,7 @@ gem 'cowsay', '~> 0.3.0'
 gem 'faker', github: 'stympy/faker'
 gem 'bootstrap', '~> 4.0.0.beta'
 gem 'jquery-rails'
+gem 'chosen-rails'
 gem 'font-awesome-rails'
 gem 'rails_12factor', group: :production
 
