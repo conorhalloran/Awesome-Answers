@@ -35,6 +35,15 @@ Rails.application.routes.draw do
     resources :likes, shallow: true, only: [:create, :destroy]
   end
 
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+        # index -> /api/v1/questions
+        resources :questions, only: [:index, :show, :create]
+    end
+  end
+
+  match "/delayed_job" => DelayedJobWeb, :anchor => false, :via => [:get, :post]
+  
   # this defines a route as follows:
   # when we receive an HTTP GET request with URL: /hello
   # send this request to the WelcomeController and invoke the `hello` method

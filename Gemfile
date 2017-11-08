@@ -36,6 +36,10 @@ gem 'jquery-rails'
 gem 'chosen-rails'
 gem 'font-awesome-rails'
 gem 'rails_12factor', group: :production
+gem 'delayed_job_active_record'
+gem "delayed_job_web"
+gem 'active_model_serializers'
+gem 'faraday'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -55,6 +59,8 @@ group :development do
   gem 'pry' #pry gem itself
   gem 'pry-rails' #a gem that integrates pry with rails seemlessly
   gem 'hirb'
+  gem "letter_opener"
+  
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

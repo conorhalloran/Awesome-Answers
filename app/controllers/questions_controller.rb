@@ -23,6 +23,7 @@ class QuestionsController < ApplicationController
     @question.user = current_user
 
     if @question.save
+      QuestionRemindersJob.set(wait_until: 5.days.from_now).perform_later(@question.id)
       redirect_to question_path(@question)
       # redirect_to @question #ð when given a model instance, shortcut for ð
     else
@@ -44,6 +45,13 @@ class QuestionsController < ApplicationController
     @answers = @question.answers.order(created_at: :desc)
     @answer = Answer.new
     @like = @question.likes.find_by_user_id current_user
+
+    # respond_to is a Rails built-in helper that enables us to send different
+    # responses based on the format of the request from the client
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @question } # ActiveRecrod has to_json method can can covert any of its objects to JSON format
+    end
 
   end
 

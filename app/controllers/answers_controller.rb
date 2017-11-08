@@ -13,6 +13,7 @@ class AnswersController < ApplicationController
     @answer.user = current_user
 
     if @answer.save
+      AnswersMailer.notify_question_owner(@answer).deliver_later
       redirect_to question_path(@question)
     else
       # We can also give render a string as an argument. When doing so,

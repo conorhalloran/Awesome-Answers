@@ -1,0 +1,9 @@
+<h1>Hello
+    <%= @question_owner.full_name %>,</h1>
+<p>
+    The Answer is:
+    <%= @answer.body %>
+</p>
+<%= link_to 'Click Here to View the Question', question_url(@question) %>
+<p>Regards,</p>
+<p>Awesome Answeras Team</p>
