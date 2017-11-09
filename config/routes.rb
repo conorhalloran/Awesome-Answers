@@ -37,8 +37,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-        # index -> /api/v1/questions
-        resources :questions, only: [:index, :show, :create]
+      # index -> /api/v1/questions
+      resources :questions, only: [:index, :show, :create, :update, :destroy]
     end
   end
 

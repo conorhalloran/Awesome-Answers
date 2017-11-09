@@ -22,6 +22,25 @@ class Api::V1::QuestionsController < Api::BaseController
         end
     end
 
+    def update
+        question = Question.find params[:id]
+        if question.update question_params
+            render json: {success: true}
+        else
+            render json: { errors: question.errors.full_messages }
+        end
+    end
+
+    def destroy
+        question = Question.find_by_id params[:id]
+        if question
+            question.destroy
+            render json: {success: true}
+        else
+            render json: { errors: ['Question does\'t exist'] }
+        end
+    end
+
     private
 
     def question_params
