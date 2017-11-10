@@ -40,6 +40,7 @@ gem 'delayed_job_active_record'
 gem "delayed_job_web"
 gem 'active_model_serializers'
 gem 'faraday'
+gem 'rack-cors'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

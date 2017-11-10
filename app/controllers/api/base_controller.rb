@@ -8,4 +8,5 @@ class Api::BaseController < ApplicationController
     @api_user = User.find_by_api_key request.headers['HTTP_API_KEY']
     head :unauthorized unless @api_user
   end
+
 end
