@@ -1,4 +1,10 @@
 class Question < ApplicationRecord
+  
+  extend FriendlyId
+  friendly_id :title, use: [:slugged, :history, :finders]
+
+  mount_uploader :image, ImageUploader
+
   belongs_to :user
   # Like `belongs_to`, `has_many` tells Rails that Question is associated
   # to the Answer model.
@@ -75,6 +81,10 @@ class Question < ApplicationRecord
   def tag_list
     tags.map(&:name).join(', ')
   end
+
+  # def to_param
+  #   "#{id}-#{title}".parameterize
+  # end
 
   private
   def set_defaults

@@ -66,7 +66,9 @@ class QuestionsController < ApplicationController
   def update
     return head :unauthorized unless can?(:update, @question)
     # 'head' is a method similar to 'render' or 'redirect_to'. It finalizess the response. However, it will not add content to the response. It will simply set the HTTP status of the response. (e.g head :unauthorized sets the status code to 401) 
+    @question.slug = nil # this will force FriendlyId to regenerate the slug
     if @question.update question_params
+
       redirect_to @question
     else
       render :edit
@@ -87,7 +89,7 @@ class QuestionsController < ApplicationController
     # question from the `params` object. And, we'll only permit
     # fields of our choice. In this case, we specifically permit
     # the fields we allow the user to edit in the new_question form.
-    params.require(:question).permit(:title, :body, {tag_ids: []})
+    params.require(:question).permit(:title, :body, :image, {tag_ids: []})
 
     # The `params` object is available inside all controllers. It's
     # a "hash" that holds all URL params, all fields from the form and
@@ -96,7 +98,7 @@ class QuestionsController < ApplicationController
   end
 
   def find_question
-    @question = Question.find params[:id]
+    @question = Question.friendly.find params[:id]
   end
 
   # Remember that if a 'before_action' callback does a 'render', 'redirect_to' pr 'head' (methods that terminate the response), it will stop the request from getting to the action.

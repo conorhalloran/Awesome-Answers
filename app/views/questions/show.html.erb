@@ -9,6 +9,8 @@
 <p><strong>Updated: </strong> <%= time_ago_in_words(@question.updated_at) + " ago" %></p>
 <p><strong>Tags: </strong> <%= @question.tag_list %></p>
 
+<%= image_tag @question.image.url(:large) if @question.image.present? %> 
+
 
 <% if user_signed_in? && can?(:crud, @question) %>
   <%= link_to 'Edit', edit_question_path(@question) %>

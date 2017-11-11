@@ -41,6 +41,11 @@ gem "delayed_job_web"
 gem 'active_model_serializers'
 gem 'faraday'
 gem 'rack-cors'
+gem 'simple_form'
+gem 'friendly_id', '~> 5.2.0'
+gem 'carrierwave', '~> 1.0'
+gem "mini_magick"
+gem 'fog'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
