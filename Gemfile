@@ -46,6 +46,7 @@ gem 'friendly_id', '~> 5.2.0'
 gem 'carrierwave', '~> 1.0'
 gem "mini_magick"
 gem 'fog'
+gem "cocoon"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

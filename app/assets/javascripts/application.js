@@ -15,4 +15,5 @@
 //= require bootstrap-sprockets
 //= require rails-ujs
 //= require chosen-jquery
+//= require cocoon
 //= require_tree .

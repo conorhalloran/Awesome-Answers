@@ -4,7 +4,10 @@
   <%= f.input :body %>
   <h2>Survey Answers</h2>
   <%= f.simple_fields_for :survey_answers do |sur_ans| %>
-    <%= sur_ans.input :body %>
+    <%= render 'survey_answer_fields', f: sur_ans %>
   <% end %>
+  <div class="links">
+    <%= link_to_add_association 'add answer', f, :survey_answers %>
+  </div>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>
