@@ -2,5 +2,9 @@
 
 <%= simple_form_for @survey_question do |f| %>
   <%= f.input :body %>
+  <h2>Survey Answers</h2>
+  <%= f.simple_fields_for :survey_answers do |sur_ans| %>
+    <%= sur_ans.input :body %>
+  <% end %>
   <%= f.submit class: 'btn btn-primary' %>
 <% end %>

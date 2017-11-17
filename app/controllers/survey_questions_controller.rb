@@ -3,6 +3,7 @@ class SurveyQuestionsController < ApplicationController
 
   def new
     @survey_question = SurveyQuestion.new
+    3.times { @survey_question.survey_answers.build }
   end
 
   def create
@@ -22,6 +23,7 @@ class SurveyQuestionsController < ApplicationController
   private
 
   def survey_question_params
-    params.require(:survey_question).permit(:body)
+    params.require(:survey_question).permit(:body,
+                                            survey_answers_attributes: [:body])
   end
 end
