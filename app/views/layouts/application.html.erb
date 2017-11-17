@@ -23,6 +23,7 @@
       <% if current_user.is_admin? %>
         <%= link_to  "Dashboard", admin_dashboard_index_path %> |
         <% end %>
+      <%= link_to 'Survey Questions', survey_questions_path %>
       <%= link_to 'Sign Out', session_path, method: :delete %>
     <% else %>
       <%= link_to "Sign-up", new_user_path %>

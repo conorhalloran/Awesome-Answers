@@ -1,9 +1,9 @@
 class QuestionsController < ApplicationController
-  # 'before_action' are executed in the order in which they appear. Make sure that any action depends on anthor appears after that action. 
+  # `before_action` are executed in the order in which they appear.
+  # Make sure that any action that depends on another appears after that action.
   before_action :authenticate_user!, except: [:index, :show]
   before_action :find_question, only: [:show, :edit, :update, :destroy]
   before_action :authorize_user!, except: [:index, :show, :new, :create]
-
   # All public methods in controllers are referred to as
   # actions.
   def new
@@ -16,7 +16,7 @@ class QuestionsController < ApplicationController
   def create
     # render json: params
     # return
-    # ð Use `render` with the `json:` argument to display
+    # 👆 Use `render` with the `json:` argument to display
     # any object in the browser as the response. Similar to
     # `response.send` from Express. Very useful for debugging.
     @question = Question.new question_params
@@ -25,7 +25,7 @@ class QuestionsController < ApplicationController
     if @question.save
       QuestionRemindersJob.set(wait_until: 5.days.from_now).perform_later(@question.id)
       redirect_to question_path(@question)
-      # redirect_to @question #ð when given a model instance, shortcut for ð
+      # redirect_to @question #👈 when given a model instance, shortcut for 👆
     else
       render :new
       # render can take a symbol as argument which should be named after
@@ -34,7 +34,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    # The following ð is repeated in many actions. All actions that
+    # The following 👇 is repeated in many actions. All actions that
     # refer to an individual question. We'll use a callback with `before_action`
     # to call a method, `find_question`, that finds the question and assigns
     # it to `@question` only for the actions that use an individual question.
@@ -44,15 +44,20 @@ class QuestionsController < ApplicationController
     # @answers = Answer.where(question_id: @question.id)
     @answers = @question.answers.order(created_at: :desc)
     @answer = Answer.new
+    # we're finding the like object for the user signed it to the question here
+    # which is `@quesiton`. If the user has liked the question then @like should
+    # refer to the row in the likes table with current_user id and @question id
+    # If the user hasn't liked before then @like will be `nil`
     @like = @question.likes.find_by_user_id current_user
 
     # respond_to is a Rails built-in helper that enables us to send different
     # responses based on the format of the request from the client
     respond_to do |format|
       format.html { render :show }
-      format.json { render json: @question } # ActiveRecrod has to_json method can can covert any of its objects to JSON format
+      format.json { render json: @question } # ActiveRecrod has to_json method
+                                             # can can covert any of its objects
+                                             # to JSON format
     end
-
   end
 
   def edit
@@ -65,10 +70,8 @@ class QuestionsController < ApplicationController
 
   def update
     return head :unauthorized unless can?(:update, @question)
-    # 'head' is a method similar to 'render' or 'redirect_to'. It finalizess the response. However, it will not add content to the response. It will simply set the HTTP status of the response. (e.g head :unauthorized sets the status code to 401) 
     @question.slug = nil # this will force FriendlyId to regenerate the slug
     if @question.update question_params
-
       redirect_to @question
     else
       render :edit
@@ -80,10 +83,7 @@ class QuestionsController < ApplicationController
     redirect_to questions_path
   end
 
-  
-
   private
-
   def question_params
     # With this method, we will extract the parameters related to
     # question from the `params` object. And, we'll only permit
@@ -98,18 +98,28 @@ class QuestionsController < ApplicationController
   end
 
   def find_question
-    @question = Question.friendly.find params[:id]
+    @question = Question.find params[:id]
   end
 
-  # Remember that if a 'before_action' callback does a 'render', 'redirect_to' pr 'head' (methods that terminate the response), it will stop the request from getting to the action.
+  # Remember that if a `before_action` callback does a `render`, `redirect_to` or
+  # `head` (methods that terminate the response), it will stop the request from
+  # getting to the action.
   def authorize_user!
     # binding.pry
     unless can?(:crud, @question)
       flash[:alert] = "Access Denied!"
       redirect_to root_path
 
+      # `head` is a method similar to `render` or `redirect_to`. It finalizes
+      # the response. However, it will add content to the response. It will simply
+      # set the HTTP status of the response. (e.g. head :unauthorized sets the
+      # the status code to 401)
+      # For a list of available status code symbols to use with `head` go to:
+      # http://billpatrianakos.me/blog/2013/10/13/list-of-rails-status-code-symbols/
+      # head :unauthorized
     end
   end
+
 
 
 
