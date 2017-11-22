@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   end
   # Note: we are not using the plural form of resources method. We are using 'resource' which will not generate routes that require an :id. Instead resource expects that our controller actions will always operate on the same resourse. Even though resource is written with a singular ':session', the controller must still be plural 'SessionsController'. 
   resource :session, only: [:new, :create, :destroy]
-  resources :users, only: [:new, :create]
+  resources :users, only: [:new, :create, :show]
   resources :survey_questions, only: [:index, :new, :create]
 
 
@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       # index -> /api/v1/questions
       resources :questions, only: [:index, :show, :create, :update, :destroy]
+      resources :tokens, only: [:create]
     end
   end
 

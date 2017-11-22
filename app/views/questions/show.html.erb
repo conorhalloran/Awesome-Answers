@@ -1,6 +1,7 @@
 <h1><%= @question.title %></h1>
 
 <p><%= @question.body %></p>
+<p>By <%= link_to @question.user&.full_name, @question.user %></p>
 
 <%# '&.' is the safe navigation operator. It can be used to avoid "undefined method '...' for nil:NilClass" errors. When used instead of '.', it will check the object before it tries to execute the method after it. If the object is 'nil', then it will immediately return 'nil'.  
 <p><strong>By:</strong> <%= @question.user&.full_name %></p>

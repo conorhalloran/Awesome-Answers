@@ -16,4 +16,6 @@
 //= require rails-ujs
 //= require chosen-jquery
 //= require cocoon
+//= require underscore
+//= require gmaps/google
 //= require_tree .

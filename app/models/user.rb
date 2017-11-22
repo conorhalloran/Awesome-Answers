@@ -6,6 +6,15 @@ class User < ApplicationRecord
     # 2.) When given a password, it will hash it and save as password_digest in the database using the library bcrypt.
     # 3.) It will add the instance 'authenticate' used to verify a password of a user. If the given password is correct, it will return the user instance. Otherwise, it will return 'false'.
 
+    extend FriendlyId
+    friendly_id :slug_candidates, use: [:slugged, :history, :finders]
+
+    def slug_candidates
+        [
+            [:first_name, :last_name, :city, :street]
+        ]
+    end
+
     
     has_many :answers, dependent: :nullify
     has_many :questions, dependent: :nullify
@@ -15,6 +24,9 @@ class User < ApplicationRecord
 
     has_many :votes, dependent: :destroy
     has_many :voted_answers, through: :votes, source: :answer
+
+    geocoded_by :full_street_address   # can also be an IP address
+    after_validation :geocode          # auto-fetch coordinates
 
     # if your `has_many...through` is using a non-standard name, in this case we're using `liked_questions` instead of `questions` then we have to provide a `source` option which should match the `belongs_to` association name in the join model which is `like` in our case
 
@@ -27,6 +39,10 @@ class User < ApplicationRecord
 
     def full_name
         "#{first_name} #{last_name}"
+    end
+
+    def full_street_address
+        "#{street} #{city} #{province} #{country} #{postal_code}"
     end
 
     private

@@ -47,6 +47,11 @@ gem 'carrierwave', '~> 1.0'
 gem "mini_magick"
 gem 'fog'
 gem "cocoon"
+gem 'jwt'
+gem 'geocoder'
+gem 'country_select'
+gem 'gmaps4rails'
+gem 'underscore-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
