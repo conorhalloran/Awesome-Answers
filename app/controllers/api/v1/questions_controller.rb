@@ -1,4 +1,5 @@
 class Api::V1::QuestionsController < Api::BaseController
+  before_action :authenticate_api_user
 
   def index
     @questions = Question.order(created_at: :desc).limit(20)

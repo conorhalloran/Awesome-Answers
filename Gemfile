@@ -52,6 +52,7 @@ gem 'geocoder'
 gem 'country_select'
 gem 'gmaps4rails'
 gem 'underscore-rails'
+gem 'aasm'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

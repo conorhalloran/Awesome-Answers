@@ -23,6 +23,7 @@ class QuestionsController < ApplicationController
     @question.user = current_user
 
     if @question.save
+      @question.answer!
       QuestionRemindersJob.set(wait_until: 5.days.from_now).perform_later(@question.id)
       redirect_to question_path(@question)
       # redirect_to @question #👈 when given a model instance, shortcut for 👆
@@ -65,7 +66,7 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @questions = Question.order(created_at: :desc)
+    @questions = Question.where(aasm_state: [:published, :answered]).order(created_at: :desc)
   end
 
   def update

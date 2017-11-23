@@ -23,6 +23,7 @@
     <%= link_to "Questions", questions_path %> |
     <%= link_to "About", hello_path %> |
     <%= link_to "Subscribe", subscribe_path %> |
+    <%= link_to 'Nearby Users', nearby_users_path %> |
     <% if user_signed_in? %>
       <span>Hello, <%= current_user.first_name %> <%= current_user.last_name %></span>
       <% if current_user.is_admin? %>

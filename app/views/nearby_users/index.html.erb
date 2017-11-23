@@ -1,0 +1,26 @@
+<h1>Nearby Users</h1>
+
+<% if @users %>
+  <div style='width: 800px;'>
+    <div id="map" style='width: 800px; height: 400px;'></div>
+  </div>
+
+  <script>
+    const handler = Gmaps.build('Google');
+    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+      markers = handler.addMarkers(<%= raw @hash.to_json %>);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+    });
+  </script>
+
+<% end %>
+
+<% if !(session[:longitude] && session[:latitude]) %>
+  <script>
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log(position.coords.latitude, position.coords.longitude);
+      window.location = `<%= nearby_users_path %>?longitude=${position.coords.longitude}&latitude=${position.coords.latitude}`;
+    });
+  </script>
+<% end %>
